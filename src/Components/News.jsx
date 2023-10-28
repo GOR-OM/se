@@ -48,7 +48,7 @@ function News() {
                   <Heading as="h2" fontWeight="bold">
                     {article.title}
                   </Heading>
-                  <Text>{article.description}</Text>
+                  
                 </div>
               </div>
             ))}
@@ -69,7 +69,7 @@ function News() {
                 <Heading as="h2" fontWeight="bold">
                   {article.title}
                 </Heading>
-                <Text>{article.description}</Text>
+                
               </div>
             </HStack>
           ))}
@@ -87,7 +87,7 @@ function News() {
                 <Heading as="h2" fontWeight="bold" overflow={'hidden'}>
                   {article.title}
                 </Heading>
-                <Text>{article.description}</Text>
+                
               </div>
             </HStack>
           ))}
@@ -116,7 +116,7 @@ function News() {
                 <Heading as="h2" fontWeight="bold">
                   {article.title}
                 </Heading>
-                <Text>{article.description}</Text>
+                
               </div>
             </HStack>
           ))}
