@@ -33,9 +33,9 @@ function News() {
   return (
     <>
       <HStack spacing="24px" align="top">
-        <VStack spacing="24px" align="top" width='60%' pr={'10'}>
+        <VStack spacing="24px" align="top" width="60%" pr={"10"}>
           {/* News Carousel */}
-          <Carousel showThumbs={false} infiniteLoop autoPlay >
+          <Carousel showThumbs={false} infiniteLoop autoPlay interval={3000}>
             {carouselNews.map((article, index) => (
               <div key={index}>
                 <img
@@ -48,7 +48,6 @@ function News() {
                   <Heading as="h2" fontWeight="bold">
                     {article.title}
                   </Heading>
-                  
                 </div>
               </div>
             ))}
@@ -56,51 +55,67 @@ function News() {
 
           {/* Existing News */}
           <HStack>
-              <VStack pr={'10'} top={'0'}>
+            <VStack pr={"10"} top={"0"} width="50%" left={"0"}>
               {leftleftNews.map((article, index) => (
-            <HStack key={index}>
-              <img
-                src={article.urlToImage}
-                alt={article.title}
-                style={{ width: "100px", height: "100px" }}
-                className="object-cover rounded-lg mr-4"
-              />
-              <div className="overflow-auto">
-                <Heading as="h2" fontWeight="bold">
-                  {article.title}
-                </Heading>
-                
-              </div>
-            </HStack>
-          ))}
-              </VStack>
-              <VStack top={'0'} pl={'10'}>
+                <HStack key={index}>
+                  <img
+                    src={article.urlToImage}
+                    alt={article.title}
+                    style={{ width: "100px", height: "100px" }}
+                    className="object-cover rounded-lg mr-4"
+                  />
+                  <div className="overflow-auto">
+                    <Heading
+                      as="h2"
+                      fontWeight="bold"
+                      style={{
+                        maxLines: 3,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {article.title}
+                    </Heading>
+                  </div>
+                </HStack>
+              ))}
+            </VStack>
+            <VStack top={"0"} pl={"10"} width="50%" right={"0"}>
               {leftrightNews.map((article, index) => (
-            <HStack key={index}>
-              <img
-                src={article.urlToImage}
-                alt={article.title}
-                style={{ width: "100px", height: "100px" }}
-                className="object-cover rounded-lg mr-4"
-              />
-              <div >
-                <Heading as="h2" fontWeight="bold" overflow={'hidden'}>
-                  {article.title}
-                </Heading>
-                
-              </div>
-            </HStack>
-          ))}
-              </VStack>
-
-
+                <HStack key={index}>
+                  <img
+                    src={article.urlToImage}
+                    alt={article.title}
+                    style={{ width: "100px", height: "100px" }}
+                    className="object-cover rounded-lg mr-4"
+                  />
+                  <div>
+                    <Heading
+                      as="h2"
+                      fontWeight="bold"
+                      style={{
+                        maxLines: 3,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {article.title}
+                    </Heading>
+                  </div>
+                </HStack>
+              ))}
+            </VStack>
           </HStack>
-
-
-
-
         </VStack>
-        <VStack spacing="24px" align="top" shadow="2xl" padding="1.5" border="2px" width='40%' pl={'10'}>
+        <VStack
+          spacing="24px"
+          align="top"
+          shadow="2xl"
+          padding="1.5"
+          border="2px"
+          width="40%"
+          pl={"10"}
+        >
           <Heading as="h1" size="lg" fontWeight="bold">
             Latest News
           </Heading>
@@ -116,7 +131,6 @@ function News() {
                 <Heading as="h2" fontWeight="bold">
                   {article.title}
                 </Heading>
-                
               </div>
             </HStack>
           ))}
@@ -127,7 +141,3 @@ function News() {
 }
 
 export default News;
-
-
-
-
