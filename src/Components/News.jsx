@@ -1,24 +1,24 @@
-
 import React, { useEffect, useState } from "react";
-import { VStack, HStack, Heading } from "@chakra-ui/react";
+import { VStack, HStack, Heading, Box,Text,Stack } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Link, Route, BrowserRouter, Routes } from "react-router-dom"; // Updated import
+import { Link, Route, BrowserRouter, Routes } from "react-router-dom"; 
 import NewsDetail from "./NewsDetail";
-
+import { LatestNews } from "./LatestNews";
 function News() {
   const [news, setNews] = useState([]);
 
   const api = async () => {
     try {
       let response = await fetch(
-        "https://newsapi.org/v2/everything?q=bitcoin&apiKey=7684b9a0b5e94656819efef1c0ed1b85"
+        "https://newsapi.org/v2/top-headlines?country=in&apiKey=7684b9a0b5e94656819efef1c0ed1b85"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       let result = await response.json();
       setNews(result.articles);
+      console.log(result.articles);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -28,21 +28,34 @@ function News() {
     api();
   }, []);
 
+
+return (
+  <BrowserRouter>
+  <Routes>
+    <Route path="/news/" element={<Home news={news} />} />
+    <Route path="/news/:title/*" element={<NewsDetail news={news} />} /> {/* Use * to capture the title */}
+  </Routes>
+</BrowserRouter>
+);
+}
+
+function Home({ news }) {
+
+
   const leftleftNews = news.slice(0, 3);
   const leftrightNews = news.slice(3, 6);
   const rightNews = news.slice(6, 12);
   const carouselNews = news.slice(15, 20);
 
-  return (
-    <>
-      <BrowserRouter>
-        <HStack spacing="24px" align="top">
-          <VStack spacing="24px" align="top" width="60%" pr={"10"}>
+return (
+
+  <HStack spacing="24px" align="top" className="p-8">
+          <VStack spacing="24px" align="top" width="60%" className="pr-16">
             {/* News Carousel */}
             <Carousel showThumbs={false} infiniteLoop autoPlay interval={3000}>
               {carouselNews.map((article, index) => (
-                <div key={index}>
-                  <Link to={`/news/${index}`}>
+                <div key={index}  >
+                  <Link to={`/news/${article.title}`}>
                     <img 
                     
                       src={article.urlToImage}
@@ -51,11 +64,11 @@ function News() {
                       className="w-full h-64 object-cover rounded-lg"
                       
                     />
-                    <div className="overflow-auto mt-2">
+                    
                       <Heading as="h2" fontWeight="bold">
                         {article.title}
                       </Heading>
-                    </div>
+                    
                   </Link>
                 </div>
               ))}
@@ -63,19 +76,20 @@ function News() {
               
 
             <HStack>
-              <VStack pr={"10"} top={"0"} width="50%" left={"0"}>
+              <VStack pr={"10"} top={"0"} width="100%" align='flex-start' >
                 {leftleftNews.map((article, index) => (
-                  <HStack key={index}>
-                    <Link to={`/news/${index}`}>
+                  
+                  // <Box key={index}  >
+                  
+                    <Link to={`/news/${article.title}`}>
+                      <HStack className="border-b-2 border-purple-700 pb-4">
                     <img
                       src={article.urlToImage}
                       alt={article.title}
                       style={{ width: "100px", height: "100px" }}
-                      className="object-cover rounded-lg mr-4"
                     />
-                    <div className="overflow-auto">
-                      <Heading
-                        as="h2"
+                    
+                      <Text
                         fontWeight="bold"
                         style={{
                           maxLines: 3,
@@ -84,25 +98,25 @@ function News() {
                         }}
                       >
                         {article.title}
-                      </Heading>
-                    </div>
+                      </Text>
+                      </HStack>
                     </Link>
-                  </HStack>
+                  
+                  // </Box>
                 ))}
               </VStack>
-              <VStack top={"0"} pl={"10"} width="50%" right={"0"}>
+              <VStack top={"0"} pl={"10"} width="100%" >
                 {leftrightNews.map((article, index) => (
-                  <HStack key={index}>
-                    <Link to={`/news/${index}`}>
+                    <Link to={`/news/${article.title}`}>
+                      <HStack className="border-b-2 border-purple-700 pb-4">
                     <img
                       src={article.urlToImage}
                       alt={article.title}
                       style={{ width: "100px", height: "100px" }}
-                      className="object-cover rounded-lg mr-4"
+                      
                     />
-                    <div>
-                      <Heading
-                        as="h2"
+                    
+                      <Text
                         fontWeight="bold"
                         style={{
                           maxLines: 3,
@@ -111,10 +125,10 @@ function News() {
                         }}
                       >
                         {article.title}
-                      </Heading>
-                    </div>
+                      </Text>
+                      </HStack>
                     </Link>
-                  </HStack>
+                  // </Box>
                 ))}
               </VStack>
             </HStack>
@@ -124,35 +138,14 @@ function News() {
             align="top"
             shadow="2xl"
             padding="1.5"
-            border="2px"
             width="40%"
             pl={"10"}
           >
-            <Heading as="h1" size="lg" fontWeight="bold">
-              Latest News
-            </Heading>
-            {rightNews.map((article, index) => (
-              <HStack key={index}>
-                <Link to={`/news/${index}`}>
-                <img
-                  src={article.urlToImage}
-                  alt={article.title}
-                  style={{ width: "100px", height: "100px" }}
-                  className="object-cover rounded-lg mr-4"
-                />
-                <div className="overflow-auto">
-                  <Heading as="h2" fontWeight="bold">
-                    {article.title}
-                  </Heading>
-                </div>
-                </Link>
-              </HStack>
-            ))}
+            <LatestNews/>
           </VStack>
         </HStack>
-      </BrowserRouter>
-    </>
-  );
+
+);
 }
 
 export default News;
